@@ -1,0 +1,38 @@
+Planejando banco de dados:
+
+REGRAS DE NEGÓCIO:
+
+O evento será cadastrado, e dentro dele poderá ter grupos ou não, ou seja, vai ter eventos que dentro dele terão grupos, sendo que
+as pessoas dentro do grupo não poderão tirar pessoas do mesmo grupo, se o evento não for agrupado, então qualquer um pode tirar 
+qualquer um
+
+O evento só existe se tiver grupo e pessoas cadastradas nele. 
+
+A pessoa, ao entrar no evento, só pode ver quem ela tirou, e não pode ver quem outras pessoas tiraram, a mesma coisa no bd, o bd 
+não pode mostrar quem uma pessoa tirou
+
+O projeto é divido em dois fronts, painel de controle e site, o painel de controle é usado para cadastrar eventos, grupos e pessoas.
+O site é usado para olhar quem voce tirou
+
+O login no site é por meio de cpf da pessoa
+
+A senha do painel de administração é mudada diariamente
+
+EVENTO:
+id PK AUTO_INCREMENT INT 
+name CHAR 
+agrupado: BOOLEAN default='false'
+status: BOOLEAN default='false'
+
+GRUPO:
+id: PK AUTO_INCREMENT INT
+id_evento: INT (RELAÇÃO EVENTO)
+name_grupo: CHAR 
+
+PESSOAS:
+id PK AUTO_INCREMENT INT 
+id_grupo: INT (RELAÇÃO GRUPO)
+id_evento: INT (RELAÇÃO EVENTO)
+name: CHAR 
+cpf: CHAR
+amigo_secreto: CHAR default=''
