@@ -1,0 +1,36 @@
+--------------PARA PRIVILÉGIOS DE ADM:-------------------
+
+GET /adm/evento
+GET /adm/evento/:id
+POST /adm/evento
+PUT /adm/evento/:id
+DELETE /adm/evento/:id
+
+*duas rotas: /adm/evento e /adm/evento/:id
+
+GET /adm/evento/:id/grupo
+GET /adm/evento/:id/grupo/:id
+POST /adm/evento/:id/grupo
+PUT /adm/evento/:id/grupo/:id
+DELETE /adm/evento/:id/grupo/:id
+
+*duas rotas: /adm/evento/:id/grupo e /adm/evento/:id/grupo/:id
+
+GET /adm/evento/:id/grupo/:id/pessoas
+GET /adm/evento/:id/grupo/:id/pessoas/:id
+POST /adm/evento/:id/grupo/:id/pessoas
+PUT /adm/evento/:id/grupo/:id/pessoas/:id
+DELETE /adm/evento/:id/grupo/:id/pessoas/:id
+
+*duas rotas: /adm/evento/:id/grupo/:id/pessoas e /adm/evento/:id/grupo/:id/pessoas/:id
+
+-----------------PARA O PÚBLICO:-----------------
+
+GET /evento
+GET /evento/:id
+
+GET /evento/:id/grupo
+GET /evento/:id/grupo/:id
+
+GET /evento/:id/grupo/:id/pessoas
+GET /evento/:id/grupo/:id/pessoas/:id
