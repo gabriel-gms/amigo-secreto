@@ -4,6 +4,7 @@ import 'dotenv/config'
 import https from 'https'
 import http from 'http'
 import siteRoutes  from './routes/site'
+import admRoutes from './routes/adm'
 import { interceptador } from './util/interceptador'
 
 //CONFIGS
@@ -16,10 +17,11 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 //MIDDLEWARES
-app.use(interceptador)
+app.all('*', interceptador)
 
 //ROUTES
 app.use('/', siteRoutes)
+app.use('/admin', admRoutes)
 
 ////////////////
 const runServer = (port:number, server: http.Server) => {
