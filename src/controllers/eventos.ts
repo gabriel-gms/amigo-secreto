@@ -15,8 +15,15 @@ export const getAll:RequestHandler = async (req, res) => {
 }
 
 export const get: RequestHandler = async (req, res) => {
-    const event = await eventos.read()
+    const { id } = req.params
+    const event = await eventos.read( parseInt(id) )
+
+    if(!event){
+        res.json({ message: "não existe esse evento"})
+    }
+
     res.json({ evento: event })
+    return
 }
 
 export const post: RequestHandler = async (req, res) => {
@@ -35,4 +42,39 @@ export const post: RequestHandler = async (req, res) => {
 
     const event = await eventos.create(dataEvents.data.name)
     res.json({ eventos: event })
+}
+
+export const put: RequestHandler = async (req, res) => {
+    const {id} = req.params
+
+    const validatorDatas = z.object({
+        name: string().optional(),
+        agrupado: boolean().optional(),
+        status: boolean().optional()
+    })
+
+    const dataUp = validatorDatas.safeParse(req.body)
+
+    if(!dataUp.success){
+        res.json({message: "dados inválidos"})
+        return
+    }
+
+    const eventUp = await eventos.update(parseInt(id), dataUp.data)
+
+    if(eventUp){
+
+        if(eventUp.status){
+            //sorteio
+        }
+        else {
+            //não fazer sorteio
+        }
+
+        res.json({eventUpgrade: eventUp})
+        return
+    }
+
+    res.json({message: "evento não modificado"})
+    return
 }

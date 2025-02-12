@@ -13,5 +13,6 @@ router.get('/ping', auth.token, (req,res)=>{
 router.get('/evento', auth.token, evento.getAll)
 router.get('/evento/:id', auth.token, evento.get)
 router.post('/evento', auth.token, evento.post)
+router.put('/evento/:id', auth.token, evento.put)
 
 export default router

@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient, Prisma } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
@@ -11,10 +11,12 @@ export const readAll = async () => {
     }
 }
 
-export const read = async () => {
+export const read = async ( id: number ) => {
     try{
-        const evento = await prisma.eventos.findUnique({
-            
+        const evento = await prisma.eventos.findFirst({
+            where: {
+                id
+            } 
         })
         return evento
     } catch (error) { 
@@ -32,5 +34,18 @@ export const create = async (dataEvents: string) => {
         return createEvent
     } catch (error) {
         return {error}
+    }
+}
+
+type EventUpData = Prisma.Args<typeof prisma.eventos, 'update'>['data']
+export const update = async (id: number, data: EventUpData) => {
+    try {
+        const eventoModificado = await prisma.eventos.update({
+            where: {id},
+            data
+        })
+        return eventoModificado
+    } catch (error) {
+        return false
     }
 }
