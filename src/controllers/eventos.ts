@@ -36,11 +36,11 @@ export const post: RequestHandler = async (req, res) => {
     const dataEvents = validatorDatas.safeParse(req.body)
 
     if(!dataEvents.success) { 
-        res.json({ message: "nome incorreto" }) 
+        res.json({ message: "dados incorretos" }) 
         return 
     }
 
-    const event = await eventos.create(dataEvents.data.name)
+    const event = await eventos.create(dataEvents.data)
     res.json({ eventos: event })
 }
 
@@ -76,5 +76,31 @@ export const put: RequestHandler = async (req, res) => {
     }
 
     res.json({message: "evento não modificado"})
+    return
+}
+
+export const delet: RequestHandler = async (req,res) => {
+    const {id} = req.params
+
+    const eventoDeletado = await eventos.deletar(parseInt(id))
+
+    if(eventoDeletado){
+        res.json({ evento: eventoDeletado })
+        return
+    }
+
+    res.json({message: "evento não existe"})
+    return
+}
+
+export const deletAll: RequestHandler = async (req, res) => {
+    const eventosDeletados = await eventos.deletarTodos()
+
+    if(eventosDeletados){
+        res.json({ deletados: eventosDeletados })
+        return
+    }
+
+    res.json({ message: "não foi possivel deletar todos" })
     return
 }

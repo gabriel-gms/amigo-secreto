@@ -20,16 +20,15 @@ export const read = async ( id: number ) => {
         })
         return evento
     } catch (error) { 
-        return {error}
+        return false
     }
 }
 
-export const create = async (dataEvents: string) => {
+type EventPostData = Prisma.Args<typeof prisma.eventos, 'create'>['data']
+export const create = async (dataEvents: EventPostData) => {
     try {
         const createEvent = await prisma.eventos.create({
-            data: {
-                name: dataEvents
-            }
+            data: dataEvents
         })
         return createEvent
     } catch (error) {
@@ -45,6 +44,26 @@ export const update = async (id: number, data: EventUpData) => {
             data
         })
         return eventoModificado
+    } catch (error) {
+        return false
+    }
+}
+
+export const deletar = async (id:number) => {
+    try {
+        const deletado = prisma.eventos.delete({
+            where: {id}
+        })
+        return deletado
+    } catch (error) {
+        return false
+    }
+}
+
+export const deletarTodos = async () => {
+    try {
+        const todos = await prisma.eventos.deleteMany()
+        return todos
     } catch (error) {
         return false
     }
