@@ -2,6 +2,7 @@ import { Router } from "express"
 import * as auth from "../controllers/auth"
 import * as evento from "../controllers/eventos"
 import * as grupo from "../controllers/grupo"
+import * as pessoa from "../controllers/pessoa"
 
 const router = Router()
 
@@ -27,5 +28,9 @@ router.put('/evento/:id_evento/grupo/:id', auth.token, grupo.put)
 router.delete('/evento/:id_evento/grupo/:id', auth.token, grupo.delet)
 
 //PESSOAS
+router.get('/evento/:id_evento/grupo/:id_grupo/pessoa', auth.token, pessoa.getAll)
+router.get('/evento/:id_evento/grupo/:id_grupo/pessoa/:id', auth.token, pessoa.get)
+router.post('/evento/:id_evento/grupo/:id_grupo/pessoa', auth.token, pessoa.post)
+router.put('/evento/:id_evento/grupo/:id_grupo/pessoa/:id', auth.token, pessoa.put)
 
 export default router
