@@ -88,3 +88,18 @@ export const put: RequestHandler = async (req, res)=>{
     }
     res.json({ peopleUpdate: peopleEdit })
 }
+
+export const delet: RequestHandler = async (req, res)=>{
+    const { id, id_evento, id_grupo } = req.params
+
+    const peopleDeleted = await pessoa.deletPeople({
+        id_evento: parseInt(id_evento),
+        id_grupo: parseInt(id_grupo),
+        id: parseInt(id)
+    })
+    if(!peopleDeleted){
+        res.json({msg:"Não foi possível deletar"})
+        return
+    }
+    res.json({ deleted: peopleDeleted })
+}

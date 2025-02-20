@@ -32,5 +32,6 @@ router.get('/evento/:id_evento/grupo/:id_grupo/pessoa', auth.token, pessoa.getAl
 router.get('/evento/:id_evento/grupo/:id_grupo/pessoa/:id', auth.token, pessoa.get)
 router.post('/evento/:id_evento/grupo/:id_grupo/pessoa', auth.token, pessoa.post)
 router.put('/evento/:id_evento/grupo/:id_grupo/pessoa/:id', auth.token, pessoa.put)
+router.delete('/evento/:id_evento/grupo/:id_grupo/pessoa/:id', auth.token, pessoa.delet)
 
 export default router

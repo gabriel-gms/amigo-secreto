@@ -1,6 +1,7 @@
 import { RequestHandler } from "express"
 import * as eventos from "../services/eventos"
 import z, { boolean, string } from "zod"
+import * as pessoas from "../services/pessoa"
 
 export const getAll:RequestHandler = async (req, res) => {
     const events = await eventos.readAll()
@@ -65,10 +66,13 @@ export const put: RequestHandler = async (req, res) => {
     if(eventUp){
 
         if(eventUp.status){
-            //sorteio
+            const sorteio = await eventos.sorteio(parseInt(id))
+            if(!sorteio){
+                res.json({msg: "impossivel de sortear"})
+            }
         }
         else {
-            //não fazer sorteio
+            await pessoas.update({id_evento: parseInt(id)}, {amigo_secreto: ''})
         }
 
         res.json({eventUpgrade: eventUp})

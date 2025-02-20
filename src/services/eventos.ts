@@ -68,3 +68,7 @@ export const deletarTodos = async () => {
         return false
     }
 }
+
+export const sorteio = async (id:number): Promise<boolean>=>{
+    return false
+}
