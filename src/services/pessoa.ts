@@ -13,7 +13,7 @@ export const readAll = async (filter: listenner)=>{
     }
 }
 
-type listennerOne = { id_evento: number, id_grupo?: number, id: number, cpf?: string }
+type listennerOne = { id_evento: number, id_grupo?: number, id?: number, cpf?: string }
 export const read = async (filter: listennerOne)=>{
     try {
         return await prisma.pessoas.findFirst({

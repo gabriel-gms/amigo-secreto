@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import z from "zod"
 import * as pessoa from "../services/pessoa"
+import { decryptMatch } from "../util/match";
 
 export const getAll: RequestHandler = async (req,res)=>{
     const { id_evento, id_grupo } = req.params
@@ -102,4 +103,45 @@ export const delet: RequestHandler = async (req, res)=>{
         return
     }
     res.json({ deleted: peopleDeleted })
+}
+
+export const searchPerson: RequestHandler = async (req, res) => {
+    const { id_event } = req.params
+
+    const searchPersonSchema = z.object({
+        cpf: z.string()
+    })
+    const query = searchPersonSchema.safeParse(req.query)
+    if(!query.success){
+        res.json({error:'Dados inválidos'})
+        return
+    }
+
+    const personItem = await pessoa.read({
+        id_evento: parseInt(id_event),
+        cpf: query.data.cpf
+    })
+    if(personItem && personItem.amigo_secreto){
+        const matchId = decryptMatch(personItem.amigo_secreto)
+
+        const personMatched = await pessoa.read({
+            id_evento: parseInt(id_event),
+            id: matchId
+        })
+        if(personMatched){
+            res.json({
+                person: {
+                    id: personItem.id,
+                    name: personItem.name
+                },
+                personMatched: {
+                    id: personMatched.id,
+                    name: personMatched.name
+                }
+            })
+            return
+        }
+    }
+    res.json({error:'ocorreu um erro'})
+    return
 }
